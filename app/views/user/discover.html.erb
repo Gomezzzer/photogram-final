@@ -1,0 +1,107 @@
+<h1><%=@current_user.username%></h1>
+
+  <!--checks if user is private-->
+<dl>
+  <dt>Private</dt>
+  <%if @current_user.private == true%>
+  <dd>Yes</dd>
+  <%else%>
+  <dd>No</dd>
+   <%end%>
+
+  <!--followers-->
+   <%followers = @current_user.received_follow_requests%>
+  <dt>Followers</dt>
+  <dd><%=followers.count%></dd>
+  </dd>
+
+   <!--following-->
+  <%following = @current_user.sentfollowrequests%>
+  <dt>Following</dt>
+  <dd><%=following.count%></dd>
+
+
+<!--user additional links-->
+<nav>
+  <ul>
+    <li>
+      <a href="/users/<%=@current_user.username%>">Profile</a>
+    </li>
+    <li>
+      <a href="/users/<%=@current_user.username%>/liked_photos">Liked photos</a>
+    </li>
+    <li>
+      <a href="/users/<%=@current_user.username%>/feed">Feed</a>
+    </li>
+    <li>
+      <a href="/users/<%=@current_user.username%>/discover">Discover</a>
+    </li>
+  </ul>
+</nav>
+
+<!--discover-->
+  <%accepted_follow_request= @current_user.sentfollowrequests.where({ :status => "accepted"})%>
+<h2>Discover (<%= accepted_follow_request.count%>)</h2>
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+    <th>
+      Likes
+    </th>
+
+    <th></th>
+  </tr>
+
+ <!--discover table info-->
+   <% accepted_follow_request.each do |following|%>
+   <% following.recipient.likes.each do |img| %>
+
+  <tr>
+  <td>
+  <img src="<%=img.photo.image%>" class="img-responsive">
+  </td>
+  <td>
+  <%=img.photo.caption%>
+  </td>
+  <td>
+  <%=img.photo.owner.username%>
+  </td>
+  <td>
+  <%=time_ago_in_words(img.photo.created_at).gsub("about", " ")%>
+  </td>
+  <td>
+  <%=img.photo.likes_count%>
+  </td>
+
+  <%if @current_user == nil%>
+    <td>
+      <a href="/user_sign_in">
+      Show details
+      </a>
+      </td>
+      <%else%>
+  <td>   <a href="/photos/<%img.photo.id%>">
+          Show details
+        </a></td>
+
+<%end%>
+<%end%>
+  </tr>
+<%end%>
+</table>

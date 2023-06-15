@@ -1,0 +1,17 @@
+<% if @current_user.present? %>
+  <% request = user.received_follow_requests.where(:sender_id => @current_user.id ).first %>
+  <% if request.nil? %>
+    <form action="/insert_follow_request" method="post">
+      <input type="hidden" name="query_recipient_id" value="<%= user.id %>">
+      <button>
+        Follow
+      </button>
+    </form>
+  <% elsif request.status == "pending" %>
+    Request sent <a href="/delete_follow_request/<%=request.id%>">Cancel</a>
+  <% else %>
+    <a href="/delete_follow_request/<%=request.id%>">
+      Unfollow
+    </a>
+  <% end %>
+<% end %>

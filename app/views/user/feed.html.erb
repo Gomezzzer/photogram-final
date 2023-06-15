@@ -1,0 +1,108 @@
+<h1><%=@current_user.username%></h1>
+
+ <!--private-->
+<dl>
+  <dt>Private</dt>
+  <%if @current_user.private == true%>
+  <dd>true</dd>
+  <%else%>
+  <dd>false</dd>
+   <%end%>
+
+    <!--follower-->
+  <%followers = @current_user.received_follow_requests%>
+  <dt>Followers</dt>
+  <dd><%=followers.count%></dd>
+
+
+  </dd>
+   <!--following-->
+ <%following = @current_user.sentfollowrequests%>
+  <dt>Following</dt>
+  <dd><%=following.count%></dd>
+  
+  <!--user additional links-->
+<nav>
+  <ul>
+    <li>
+      <a href="/users/<%=@current_user.username%>">Profile</a>
+    </li>
+    <li>
+      <a href="/users/<%=@current_user.username%>/liked_photos">Liked photos</a>
+    </li>
+    <li>
+      <a href="/users/<%=@current_user.username%>/feed">Feed</a>
+    </li>
+    <li>
+      <a href="/users/<%=@current_user.username%>/discover">Discover</a>
+    </li>
+  </ul>
+</nav>
+
+
+
+<!--feed table-->
+<h2> Feed (<%=@accepted_follow_request_count%>)</h2>
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+    <th>
+      Likes
+    </th>
+
+    <th></th>
+  </tr>
+
+<!--feed content-->
+<%@accepted_follow_request.each do |follower|%>
+<%follower.following_photos.each do |user_post|%>
+  <tr>
+    <td>
+    <img src="<%=user_post.image%>">
+    </td>
+
+    <td>
+       <%=user_post.owner.username %>
+    </td>
+
+    <td>
+      <%=user_post.caption%>
+    </td>
+
+    <td>
+      <%=time_ago_in_words(user_post.created_at)%>
+    </td>
+    <td>
+    <%=user_post.likes_count%>
+    </td>
+
+
+    <%if @current_user != nil%>
+    <td>
+    <a href="photos/<%=user_post.id%>"> Show details</a>
+    </td>
+    <%else%>
+     <a href="/user_sign_in"> Show details</a>
+    </td>
+
+  <%end%>
+  <%end%>
+   </tr>
+  <%end%>
+   </table>

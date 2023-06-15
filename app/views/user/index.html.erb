@@ -1,0 +1,45 @@
+<h1>List of users</h1>
+
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Username
+        </th>
+
+        <th>
+          Private?
+        </th>
+
+        <th>
+
+        </th>
+
+        <th>
+
+        </th>
+
+      </tr>
+
+      <% @list_of_users.each do |a_user| %>
+        <tr>
+          <td>
+            <%= a_user.username %>
+          </td>
+          <td>
+            <%= a_user.private ? "Yes" : "No" %>
+          </td>
+          <td>
+            <%= render "user/follow_request", user: a_user %>
+          </td>
+          <td>
+            <a href="/users/<%= a_user.username %>">
+              Show details
+            </a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

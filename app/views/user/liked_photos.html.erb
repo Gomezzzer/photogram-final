@@ -1,0 +1,108 @@
+<h1><%=@current_user.username%></h1>
+
+
+<!--checks if user is private-->
+<dl>
+  <dt>Private</dt>
+  <%if @current_user.private == true%>
+  <dd>true</dd>
+  <%else%>
+  <dd>false</dd>
+   <%end%>
+
+   <!--followers-->
+   <%followers = @current_user.received_follow_requests%>
+  <dt>Followers</dt>
+  <dd><%=followers.count%></dd>
+
+     <!--following-->
+  </dd>
+  <%=following = @current_user.sentfollowrequests%>
+  <dt>Following</dt>
+  <dd><%=following.count%></dd>
+
+  <!--user additional links-->
+<nav>
+  <ul>
+    <li>
+      <a href="/users/<%=@current_user.username%>">Profile</a>
+    </li>
+    <li>
+      <a href="/users/<%=@current_user.username%>/liked_photos">Liked photos</a>
+    </li>
+    <li>
+      <a href="/users/<%=@current_user.username%>/feed">Feed</a>
+    </li>
+    <li>
+      <a href="/users/<%=@current_user.username%>/discover">Discover</a>
+    </li>
+  </ul>
+</nav>
+
+
+  <!--users liked photos-->
+<h2>Liked photos (<%=@current_user.likes.count%>)</h2>
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Owner
+    </th>
+
+    <th>
+      Caption
+    </th>
+
+    <th>
+      Posted
+    </th>
+
+    <th>
+      Likes
+    </th>
+
+    <th></th>
+  </tr>
+ 
+      <% @current_user.likes.each do |likes| %>
+        <tr>
+
+          <td>
+            <img src="<%= likes.photo.image %>" class="img-responsive">
+          </td>
+
+          <td>
+            <%= likes.photo.caption %>
+          </td>
+
+          <td>
+            <%= likes.photo.owner.username %>
+          </td>
+
+          <td>
+            <%= time_ago_in_words(likes.photo.created_at) %> ago
+          </td>
+          <td>
+            <%= likes.photo.likes_count %>
+          </td>
+
+<% if @current_user != nil %>
+          <td>
+            <a href="/photos/<%= likes.photo.id %>">
+              Show details
+            </a>
+          </td>
+          <% else %>
+          <td>
+            <a href="/user_sign_in">
+              Show details
+            </a>
+          </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
