@@ -1,0 +1,108 @@
+  <h1>
+      List of all photos
+    </h1>
+
+
+
+ <% if session.fetch(:user_id) != nil %>
+
+    <h2>
+      Add a new photo
+    </h2>
+
+    <form action="/insert_photo" method="post" enctype="multipart/form-data">
+
+      <div>
+        <label for="image_box">
+          Image
+        </label>
+
+        <input type="file" id="image_box" name="query_image" placeholder="Enter a URL for the image...">
+      </div>
+<div>
+        <label for="browser_caption">
+          Caption
+        </label>
+
+          <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."></textarea>
+      </div>
+
+      <button>
+        Add photo
+      </button>
+    </form>
+<%end%>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Image
+        </th>
+
+        <th>
+          Caption
+        </th>
+
+        <th>
+         Owner
+        </th>
+
+        <th>
+          Posted
+        </th>
+
+        <th>
+          Likes
+        </th>
+
+        <th>
+        </th>
+
+      </tr>
+       <% @list_of_photos.each do |a_photo| %>
+      <%if a_photo.owner.private != true%>
+      <tr>
+        <td>
+         <img src = "<%=a_photo.image%>" class="img-responsive">
+        </td>
+
+        <td>
+          <%= a_photo.caption %>
+        </td>
+        <td>
+          <%=a_photo.owner.username%>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_photo.created_at) %> ago
+        </td>
+
+        <td>
+          <%= a_photo.likes_count %>
+        </td>
+          <% if @current_user == nil %>
+
+            <td>
+              <a href="/user_sign_in">
+                Show details
+              </a>
+            </td>
+          <% else %>
+            <td>
+              <a href="/photos/<%= a_photo.id %>">
+                Show details
+              </a>
+            </td>
+
+          <% end %>
+        </tr>
+      <% end %>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
