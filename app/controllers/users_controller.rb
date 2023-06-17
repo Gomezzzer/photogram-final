@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
   
     follow_requests = FollowRequest.all
-    list_of_follow_request = follow_requests.order({:created_at => :desc})
+    list_of_follow_request =follow_requests.order({:created_at => :desc})
     @pending_followers =list_of_follow_request.where({:recipient_id => @current_user.id})
 
     

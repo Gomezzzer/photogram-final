@@ -16,3 +16,4 @@ class FollowRequest < ApplicationRecord
 
   has_many :following_photos, { :through => :recipient, :source => :photos }
 end
+    

@@ -1,3 +1,4 @@
+class CommentsController < ApplicationContoller 
 def index
     matching_comments = Comment.all
 
