@@ -1,4 +1,4 @@
-class CommentsController < ApplicationContoller 
+class CommentsController < ApplicationController 
 def index
     matching_comments = Comment.all
 

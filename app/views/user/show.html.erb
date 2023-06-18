@@ -10,30 +10,25 @@
    <%end%>
 
 <!--checks the users followers-->
-   <% @followers = @the_user.received_follow_requests%>
+   <%@followers=@the_user.received_follow_requests%>
   <dt>Followers</dt>
   <dd><%=@followers.count %></dd>
 
 <!--users pending follow requests-->
-  <h4>Pending follow requests</h4>
-     <%@pending_followers.each do |request| %>
-       <%if request.status == "pending"%>
-       <%= request.recipient.username %>
-       <div>
-              <form action="/modify_follow_request/<%=request.id%>"  method="post" >
-
-                  <input type="hidden" id="recipient_id_box" name="query_recipient_id" value="<%=request.recipient_id%>">
-                  <input type="hidden" id="sender_id_box" name="query_sender_id" value="<%=request.sender_id%>">
-
-                <input type="hidden" id="status_box" name="query_status">
-
-                <button>
-                  Accept
-                </button>
-              </div>
-            <% end %>
-          <% end %>
-        </dd>
+    <h4>Pending follow requests</h4>
+    <% @pending_followers.each do |request| %>
+      <% if request.status == "pending"%>
+        <%= request.sender.username %>
+        <form action="/modify_follow_request/<%=request.id%>"  method="post" >
+          <input type="hidden" id="recipient_id_box" name="query_recipient_id" value="<%=request.recipient_id%>">
+          <input type="hidden" id="sender_id_box" name="query_sender_id" value="<%=request.sender_id%>">
+          <input type="hidden" id="status_box" name="query_status">
+          <button>
+            Accept
+          </button>
+        </form>
+      <% end %>
+    <% end %>
 
 <!--users number of followers-->
   <%following=@the_user.sentfollowrequests%>
