@@ -1,12 +1,54 @@
-<a href="/users">All users</a> |
-<a href="/photos">All public photos</a>
-<% if session.fetch(:user_id) == nil %>
-  <a href="/user_sign_in">Sign in</a> |
-  <a href="/user_sign_up">Sign up</a>
-<% else %>
-  | <a href="/">Home</a> |
-  <% if @current_user.present? %>
-    <a href="/edit_user_profile"><%= @current_user.username %></a> |
-  <% end %>
-  <a href="/user_sign_out">Sign out</a>
-<% end %>
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow p-3 mb-5">
+  <div class="container-fluid">
+    <a class="navbar-brand fs-2" href="/">Photogram</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/users">All Users</a></li>
+            <li><a class="dropdown-item" href="/photos">Photos</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+
+      <!-- Integration of provided HTML content -->
+      <ul class="navbar-nav">
+        <% if session.fetch(:user_id).nil? %>
+          <li class="nav-item">
+            <a class="nav-link" href="/user_sign_in">Sign in</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/user_sign_up">Sign up</a>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <% if @current_user.present? %>
+            <li class="nav-item">
+              <a class="nav-link" href="/edit_user_profile"><%= @current_user.username %></a>
+            </li>
+          <% end %>
+          <li class="nav-item">
+            <a class="nav-link" href="/user_sign_out">Sign out</a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
