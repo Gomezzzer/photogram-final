@@ -1,15 +1,17 @@
 <h1>List of users</h1>
 
-<div>
-  <div>
+<hr>
+
+<div class="mx-auto p-2" style="width: 95rem;">
+  <div class="card" style="width: 50rem;">
     <table border="1">
       <tr>
         <th>
-          Username
+        <h5 class="card-subtitle mt-2 mb-2 text-body-secondary">Username</h5> 
         </th>
 
         <th>
-          Private?
+        <h5 class="card-subtitle mt-2 mb-2 text-body-secondary">Private?</h5>
         </th>
 
         <th>
@@ -25,7 +27,7 @@
       <% @list_of_users.each do |a_user| %>
         <tr>
           <td>
-            <%= a_user.username %>
+           <%= a_user.username %>
           </td>
           <td>
             <%= a_user.private ? "Yes" : "No" %>

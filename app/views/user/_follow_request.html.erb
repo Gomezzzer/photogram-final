@@ -3,15 +3,13 @@
   <% if request.nil? %>
     <form action="/insert_follow_request" method="post">
       <input type="hidden" name="query_recipient_id" value="<%= user.id %>">
-      <button>
-        Follow
-      </button>    
+      <button class="btn btn-primary">Follow</button>  
     </form>
   <% elsif request.status == "pending" %>
     Request sent <a href="/delete_follow_request/<%=request.id%>">Cancel</a>
   <% else %>
     <a href="/delete_follow_request/<%=request.id%>">
-      Unfollow
+    <button class="btn btn-primary">Unfollow</button>
     </a>
   <% end %>
 <% end %>
